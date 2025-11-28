@@ -1,0 +1,285 @@
+<!-- Product Detail Page -->
+<main class="product-detail-page" *ngIf="product">
+
+  <!-- Breadcrumb -->
+  <section class="breadcrumb">
+    <div class="breadcrumb__container">
+      <nav class="breadcrumb__nav" aria-label="Breadcrumb">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item">
+            <a class="breadcrumb__link" routerLink="/">Home</a>
+          </li>
+          <li class="breadcrumb__item">
+            <a class="breadcrumb__link" routerLink="/shop">Shop</a>
+          </li>
+          <li class="breadcrumb__item breadcrumb__item--active" aria-current="page">
+            {{ product.name }}
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Product Content -->
+  <section class="product-content">
+    <div class="product-content__container">
+      <div class="product-content__grid">
+
+        <!-- Product Gallery -->
+        <div class="product-gallery">
+          <div class="product-gallery__main">
+            <img 
+              class="product-gallery__main-image" 
+              [src]="selectedImage" 
+              [alt]="product.name"
+              loading="eager"
+            />
+          </div>
+          <div class="product-gallery__thumbnails">
+            <button 
+              *ngFor="let image of product.images"
+              class="product-gallery__thumbnail"
+              [class.product-gallery__thumbnail--active]="selectedImage === image"
+              (click)="selectImage(image)"
+              [attr.aria-label]="'View image ' + (product.images.indexOf(image) + 1)"
+            >
+              <img [src]="image" [alt]="product.name + ' view ' + (product.images.indexOf(image) + 1)">
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+          <div class="product-info__header">
+            <div class="product-info__category">{{ product.category }}</div>
+            <h1 class="product-info__title">{{ product.name }}</h1>
+            
+            <div class="product-info__rating">
+              <div class="rating">
+                <svg class="rating__star" *ngFor="let star of [1,2,3,4,5]" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <span class="rating__value">{{ product.rating }}</span>
+                <span class="rating__count">({{ product.reviews }} reviews)</span>
+              </div>
+            </div>
+
+            <p class="product-info__description">{{ product.description }}</p>
+          </div>
+
+          <!-- Price & Stock -->
+          <div class="product-info__price-section">
+            <div class="product-info__price">₦{{ product.price.toLocaleString() }}</div>
+            <div class="product-info__stock" [class.product-info__stock--in]="product.inStock" [class.product-info__stock--out]="!product.inStock">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" *ngIf="product.inStock">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" *ngIf="!product.inStock">
+                <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+            </div>
+          </div>
+
+          <!-- Key Details -->
+          <div class="product-info__details">
+            <div class="detail-item">
+              <svg class="detail-item__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+              </svg>
+              <div class="detail-item__content">
+                <span class="detail-item__label">Size:</span>
+                <span class="detail-item__value">{{ product.size }}</span>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <svg class="detail-item__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+              </svg>
+              <div class="detail-item__content">
+                <span class="detail-item__label">Delivery:</span>
+                <span class="detail-item__value">{{ product.deliveryTime }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quantity & Add to Cart -->
+          <div class="product-info__actions">
+            <div class="quantity-selector">
+              <label class="quantity-selector__label" for="quantity">Quantity:</label>
+              <div class="quantity-selector__controls">
+                <button 
+                  class="quantity-selector__button" 
+                  (click)="decrementQuantity()"
+                  [disabled]="quantity <= 1"
+                  aria-label="Decrease quantity"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                  </svg>
+                </button>
+                <input 
+                  class="quantity-selector__input" 
+                  type="number" 
+                  id="quantity"
+                  [(ngModel)]="quantity"
+                  min="1"
+                  readonly
+                  aria-label="Product quantity"
+                />
+                <button 
+                  class="quantity-selector__button" 
+                  (click)="incrementQuantity()"
+                  aria-label="Increase quantity"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <button 
+              class="button button--primary button--large button--full" 
+              (click)="addToCart()"
+              [disabled]="!product.inStock"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+              Add to Cart
+            </button>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="trust-badges">
+            <div class="trust-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <span>5-Year Warranty</span>
+            </div>
+            <div class="trust-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+              </svg>
+              <span>Free Delivery</span>
+            </div>
+            <div class="trust-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              <span>Easy Returns</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Details Tabs -->
+  <section class="product-tabs">
+    <div class="product-tabs__container">
+      <div class="tabs">
+        <div class="tabs__nav">
+          <button 
+            class="tabs__button" 
+            [class.tabs__button--active]="activeTab === 'description'"
+            (click)="setActiveTab('description')"
+            [attr.aria-selected]="activeTab === 'description'"
+          >
+            Description
+          </button>
+          <button 
+            class="tabs__button" 
+            [class.tabs__button--active]="activeTab === 'specifications'"
+            (click)="setActiveTab('specifications')"
+            [attr.aria-selected]="activeTab === 'specifications'"
+          >
+            Specifications
+          </button>
+          <button 
+            class="tabs__button" 
+            [class.tabs__button--active]="activeTab === 'features'"
+            (click)="setActiveTab('features')"
+            [attr.aria-selected]="activeTab === 'features'"
+          >
+            Features
+          </button>
+        </div>
+
+        <div class="tabs__content">
+          <!-- Description Tab -->
+          <div class="tab-panel" *ngIf="activeTab === 'description'">
+            <h2 class="tab-panel__title">Product Description</h2>
+            <p class="tab-panel__text">{{ product.longDescription }}</p>
+            <div class="dimensions">
+              <h3 class="dimensions__title">Dimensions</h3>
+              <div class="dimensions__grid">
+                <div class="dimension-item">
+                  <span class="dimension-item__label">Length</span>
+                  <span class="dimension-item__value">{{ product.dimensions.length }}</span>
+                </div>
+                <div class="dimension-item">
+                  <span class="dimension-item__label">Width</span>
+                  <span class="dimension-item__value">{{ product.dimensions.width }}</span>
+                </div>
+                <div class="dimension-item">
+                  <span class="dimension-item__label">Height</span>
+                  <span class="dimension-item__value">{{ product.dimensions.height }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Specifications Tab -->
+          <div class="tab-panel" *ngIf="activeTab === 'specifications'">
+            <h2 class="tab-panel__title">Technical Specifications</h2>
+            <div class="specifications">
+              <div class="spec-item" *ngFor="let spec of product.specifications">
+                <span class="spec-item__label">{{ spec.label }}</span>
+                <span class="spec-item__value">{{ spec.value }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Features Tab -->
+          <div class="tab-panel" *ngIf="activeTab === 'features'">
+            <h2 class="tab-panel__title">Key Features</h2>
+            <ul class="features-list">
+              <li class="features-list__item" *ngFor="let feature of product.features">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {{ feature }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-section__container">
+      <div class="cta-section__content">
+        <h2 class="cta-section__title">Have Questions?</h2>
+        <p class="cta-section__description">
+          Our team is here to help you choose the perfect cabin for your needs.
+        </p>
+      </div>
+      <div class="cta-section__actions">
+        <a class="button button--primary button--large" routerLink="/contact">
+          Contact Us
+        </a>
+        <a class="button button--secondary button--large" routerLink="/shop">
+          Browse More
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>

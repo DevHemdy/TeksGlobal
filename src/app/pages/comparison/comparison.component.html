@@ -1,0 +1,197 @@
+<!-- Comparison Page -->
+<main class="comparison-page">
+
+  <!-- Header -->
+  <section class="comparison-header">
+    <div class="comparison-header__container">
+      <h1 class="comparison-header__title">Compare Cabins</h1>
+      <p class="comparison-header__description">
+        Side-by-side comparison of {{ comparisonItems.length }} cabin{{ comparisonItems.length !== 1 ? 's' : '' }}
+      </p>
+    </div>
+  </section>
+
+  <!-- Empty State -->
+  <section class="comparison-empty" *ngIf="comparisonItems.length === 0">
+    <div class="comparison-empty__container">
+      <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+      </svg>
+      <h2 class="comparison-empty__title">No cabins to compare</h2>
+      <p class="comparison-empty__description">
+        Add cabins to comparison from the Cabin Finder to see them side-by-side
+      </p>
+      <a class="button button--primary button--large" routerLink="/cabin-finder">
+        Go to Cabin Finder
+      </a>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="comparison-content" *ngIf="comparisonItems.length > 0">
+    <div class="comparison-content__container">
+      
+      <!-- Actions Bar -->
+      <div class="comparison-actions">
+        <a class="button button--secondary" routerLink="/cabin-finder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Back to Finder
+        </a>
+        <button class="button button--secondary" (click)="clearAll()">
+          Clear All
+        </button>
+      </div>
+
+      <!-- Comparison Grid -->
+      <div class="comparison-table">
+        
+        <!-- Product Cards Row -->
+        <div class="comparison-row comparison-row--products">
+          <div class="comparison-label"></div>
+          <div class="product-card" *ngFor="let product of comparisonItems">
+            <button 
+              class="product-card__remove"
+              (click)="removeItem(product.id)"
+              aria-label="Remove from comparison"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+            
+            <div class="product-card__image">
+              <img [src]="product.image" [alt]="product.name">
+            </div>
+            
+            <div class="product-card__content">
+              <span class="product-card__category">{{ product.category }}</span>
+              <h3 class="product-card__title">{{ product.name }}</h3>
+              <div class="product-card__price">₦{{ product.price.toLocaleString() }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Size Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">Size</div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems">
+            <strong>{{ product.size }}</strong>
+          </div>
+        </div>
+
+        <!-- Dimensions Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">Dimensions</div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems">
+            <div class="dimension-grid">
+              <div>L: {{ product.dimensions.length }}</div>
+              <div>W: {{ product.dimensions.width }}</div>
+              <div>H: {{ product.dimensions.height }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rating Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">Rating</div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems">
+            <div class="rating-display">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <strong>{{ product.rating }}</strong>
+              <span>({{ product.reviews }} reviews)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stock Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">Availability</div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems">
+            <span 
+              class="stock-badge"
+              [class.stock-badge--in]="product.inStock"
+              [class.stock-badge--out]="!product.inStock"
+            >
+              {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Delivery Time Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">Delivery Time</div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems">
+            {{ product.deliveryTime }}
+          </div>
+        </div>
+
+        <!-- Features Header -->
+        <div class="comparison-row comparison-row--header">
+          <div class="comparison-label">Features</div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems"></div>
+        </div>
+
+        <!-- Features List -->
+        <div class="comparison-row" *ngFor="let i of [0,1,2,3,4,5]">
+          <div class="comparison-label">
+            {{ comparisonItems[0]?.features && comparisonItems[0].features[i] ? getFeatureName(comparisonItems[0].features[i]) : '—' }}
+          </div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems">
+            <span 
+              class="feature-check"
+              [class.feature-check--yes]="product.features[i]"
+              [class.feature-check--no]="!product.features[i]"
+            >
+              {{ product.features[i] ? '✓' : '—' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Specifications Header -->
+        <div class="comparison-row comparison-row--header">
+          <div class="comparison-label">Specifications</div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems"></div>
+        </div>
+
+        <!-- Specifications List -->
+        <div class="comparison-row" *ngFor="let i of [0,1,2,3,4,5]">
+          <div class="comparison-label">
+            {{ comparisonItems[0]?.specifications && comparisonItems[0].specifications[i]?.label || '—' }}
+          </div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems">
+            {{ product.specifications && product.specifications[i]?.value || '—' }}
+          </div>
+        </div>
+
+        <!-- Actions Row -->
+        <div class="comparison-row comparison-row--actions">
+          <div class="comparison-label"></div>
+          <div class="comparison-cell" *ngFor="let product of comparisonItems">
+            <div class="action-buttons">
+              <a 
+                class="button button--secondary button--small button--full"
+                [routerLink]="['/product', product.id]"
+              >
+                View Details
+              </a>
+              <button 
+                class="button button--primary button--small button--full"
+                (click)="addToCart(product)"
+                [disabled]="!product.inStock"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>

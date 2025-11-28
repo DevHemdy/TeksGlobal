@@ -1,0 +1,302 @@
+<div class="payment">
+  <div class="payment__container">
+    <!-- Breadcrumb -->
+    <nav class="payment__breadcrumb" aria-label="Checkout progress">
+      <ol class="breadcrumb">
+        <li class="breadcrumb__item breadcrumb__item--completed">
+          <span class="breadcrumb__number">✓</span>
+          <span class="breadcrumb__text">Customer Info</span>
+        </li>
+        <li class="breadcrumb__item breadcrumb__item--completed">
+          <span class="breadcrumb__number">✓</span>
+          <span class="breadcrumb__text">Delivery</span>
+        </li>
+        <li class="breadcrumb__item breadcrumb__item--active">
+          <span class="breadcrumb__number">3</span>
+          <span class="breadcrumb__text">Payment</span>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__number">4</span>
+          <span class="breadcrumb__text">Review</span>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="payment__content">
+      <!-- Header -->
+      <div class="payment__header">
+        <h1 class="payment__title">Payment Information</h1>
+        <p class="payment__subtitle">Your payment information is secure and encrypted.</p>
+      </div>
+
+      <form class="payment__form" (ngSubmit)="onSubmit()">
+        <!-- Payment Method -->
+        <section class="payment-section">
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M2 10h20" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            Credit Card Information
+          </h2>
+
+          <div class="form-grid">
+            <!-- Card Number -->
+            <div class="form-group form-group--full">
+              <label for="cardNumber" class="form-label">
+                Card Number <span class="form-label__required">*</span>
+              </label>
+              <div class="input-with-icon">
+                <input
+                  type="text"
+                  id="cardNumber"
+                  name="cardNumber"
+                  class="form-input"
+                  [class.form-input--error]="hasError('cardNumber')"
+                  [(ngModel)]="paymentInfo.cardNumber"
+                  (input)="formatCardNumber()"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="19"
+                  required
+                />
+                <svg class="input-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+                  <path d="M2 10h20" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <span class="form-error" *ngIf="hasError('cardNumber')">
+                {{ getError('cardNumber') }}
+              </span>
+            </div>
+
+            <!-- Cardholder Name -->
+            <div class="form-group form-group--full">
+              <label for="cardName" class="form-label">
+                Cardholder Name <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="cardName"
+                name="cardName"
+                class="form-input"
+                [class.form-input--error]="hasError('cardName')"
+                [(ngModel)]="paymentInfo.cardName"
+                placeholder="Name as it appears on card"
+                required
+              />
+              <span class="form-error" *ngIf="hasError('cardName')">
+                {{ getError('cardName') }}
+              </span>
+            </div>
+
+            <!-- Expiry Date -->
+            <div class="form-group">
+              <label for="expiryDate" class="form-label">
+                Expiry Date <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="expiryDate"
+                name="expiryDate"
+                class="form-input"
+                [class.form-input--error]="hasError('expiryDate')"
+                [(ngModel)]="paymentInfo.expiryDate"
+                (input)="formatExpiryDate()"
+                placeholder="MM/YY"
+                maxlength="5"
+                required
+              />
+              <span class="form-error" *ngIf="hasError('expiryDate')">
+                {{ getError('expiryDate') }}
+              </span>
+            </div>
+
+            <!-- CVV -->
+            <div class="form-group">
+              <label for="cvv" class="form-label">
+                CVV <span class="form-label__required">*</span>
+              </label>
+              <div class="cvv-input-wrapper">
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                  class="form-input"
+                  [class.form-input--error]="hasError('cvv')"
+                  [(ngModel)]="paymentInfo.cvv"
+                  (input)="formatCVV()"
+                  placeholder="123"
+                  maxlength="4"
+                  required
+                />
+                <div class="cvv-tooltip">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M8 7v4M8 5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  <span class="tooltip-text">3-4 digit security code on back of card</span>
+                </div>
+              </div>
+              <span class="form-error" *ngIf="hasError('cvv')">
+                {{ getError('cvv') }}
+              </span>
+            </div>
+
+            <!-- Billing ZIP -->
+            <div class="form-group">
+              <label for="billingZip" class="form-label">
+                Billing ZIP Code <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="billingZip"
+                name="billingZip"
+                class="form-input"
+                [class.form-input--error]="hasError('billingZip')"
+                [(ngModel)]="paymentInfo.billingZip"
+                placeholder="12345"
+                required
+              />
+              <span class="form-error" *ngIf="hasError('billingZip')">
+                {{ getError('billingZip') }}
+              </span>
+            </div>
+
+            <!-- Save Card -->
+            <div class="form-group form-group--full">
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  name="saveCard"
+                  [(ngModel)]="paymentInfo.saveCard"
+                  class="checkbox-input"
+                />
+                <span class="checkbox-text">Save this card for future purchases</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Billing Address -->
+        <section class="payment-section">
+          <h2 class="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 7v7c0 6.49 4.5 9.78 10 11 5.5-1.22 10-4.51 10-11V7l-10-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Billing Address
+          </h2>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                name="sameAsDelivery"
+                [(ngModel)]="billingAddress.sameAsDelivery"
+                class="checkbox-input"
+              />
+              <span class="checkbox-text">Same as delivery address</span>
+            </label>
+          </div>
+
+          <div class="form-grid" *ngIf="!billingAddress.sameAsDelivery">
+            <!-- Billing Street -->
+            <div class="form-group form-group--full">
+              <label for="billingStreet" class="form-label">
+                Street Address <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="billingStreet"
+                name="billingStreet"
+                class="form-input"
+                [class.form-input--error]="hasError('billingStreet')"
+                [(ngModel)]="billingAddress.street"
+                placeholder="123 Main Street"
+              />
+              <span class="form-error" *ngIf="hasError('billingStreet')">
+                {{ getError('billingStreet') }}
+              </span>
+            </div>
+
+            <!-- Billing City -->
+            <div class="form-group">
+              <label for="billingCity" class="form-label">
+                City <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="billingCity"
+                name="billingCity"
+                class="form-input"
+                [class.form-input--error]="hasError('billingCity')"
+                [(ngModel)]="billingAddress.city"
+                placeholder="City"
+              />
+              <span class="form-error" *ngIf="hasError('billingCity')">
+                {{ getError('billingCity') }}
+              </span>
+            </div>
+
+            <!-- Billing State -->
+            <div class="form-group">
+              <label for="billingState" class="form-label">
+                State <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="billingState"
+                name="billingState"
+                class="form-input"
+                [class.form-input--error]="hasError('billingState')"
+                [(ngModel)]="billingAddress.state"
+                placeholder="State"
+              />
+              <span class="form-error" *ngIf="hasError('billingState')">
+                {{ getError('billingState') }}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Security Notice -->
+        <div class="payment__security">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <h3 class="security-title">Secure Payment</h3>
+            <p class="security-text">Your payment information is encrypted using 256-bit SSL technology. We never store your full card details.</p>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="payment__actions">
+          <a routerLink="/checkout/delivery-options" class="button button--secondary button--large">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back
+          </a>
+          <button type="submit" class="button button--primary button--large">
+            Review Order
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Accepted Cards -->
+      <div class="payment__cards">
+        <span class="cards-label">We Accept:</span>
+        <div class="cards-icons">
+          <span class="card-icon">💳 Visa</span>
+          <span class="card-icon">💳 Mastercard</span>
+          <span class="card-icon">💳 Amex</span>
+          <span class="card-icon">💳 Discover</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

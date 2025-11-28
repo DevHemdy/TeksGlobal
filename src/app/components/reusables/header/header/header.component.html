@@ -1,0 +1,133 @@
+<!-- Header Component -->
+<header class="header">
+  <div class="header__container">
+    <!-- Logo -->
+    <a class="header__logo" routerLink="/" aria-label="CabinHub - Home">
+      <svg class="header__logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M16 2L4 9V23L16 30L28 23V9L16 2Z" fill="currentColor" opacity="0.2"/>
+        <path d="M16 2L4 9M16 2L28 9M16 2V16M4 9V23M4 9L16 16M28 9V23M28 9L16 16M4 23L16 30M4 23L16 16M28 23L16 30M28 23L16 16M16 30V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="header__logo-text">CabinHub</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="header__nav" aria-label="Main navigation">
+      <ul class="header__nav-list">
+        <li class="header__nav-item">
+          <a class="header__nav-link" routerLink="/" routerLinkActive="header__nav-link--active" [routerLinkActiveOptions]="{exact: true}">
+            Home
+          </a>
+        </li>
+        <li class="header__nav-item">
+          <a class="header__nav-link" routerLink="/shop" routerLinkActive="header__nav-link--active">
+            Shop
+          </a>
+        </li>
+        <li class="header__nav-item">
+          <a class="header__nav-link" routerLink="/cabin-finder" routerLinkActive="header__nav-link--active">
+            Cabin Finder
+          </a>
+        </li>
+        <li class="header__nav-item">
+          <a class="header__nav-link" routerLink="/about" routerLinkActive="header__nav-link--active">
+            About
+          </a>
+        </li>
+        <li class="header__nav-item">
+          <a class="header__nav-link" routerLink="/services" routerLinkActive="header__nav-link--active">
+            Services
+          </a>
+        </li>
+        <li class="header__nav-item">
+          <a class="header__nav-link" routerLink="/contact" routerLinkActive="header__nav-link--active">
+            Contact
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header__actions">
+      <!-- Cart Button -->
+      <a 
+        class="header__action-btn header__action-btn--cart" 
+        [class.header__action-btn--has-items]="cartCount > 0"
+        routerLink="/cart"
+        [attr.aria-label]="'Shopping cart (' + cartCount + ' ' + (cartCount === 1 ? 'item' : 'items') + ')'"
+      >
+        <svg class="header__action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span 
+          class="header__cart-badge" 
+          *ngIf="cartCount > 0"
+          aria-hidden="true"
+        >
+          {{ cartCount }}
+        </span>
+      </a>
+
+      <!-- CTA Button (Desktop) -->
+      <a class="button button--primary button--small header__cta" routerLink="/shop">
+        Get Started
+      </a>
+
+      <!-- Mobile Menu Toggle -->
+      <button 
+        class="header__menu-toggle" 
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="header__menu-icon" [class.header__menu-icon--open]="isMobileMenuOpen">
+          <span class="header__menu-line"></span>
+          <span class="header__menu-line"></span>
+          <span class="header__menu-line"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div class="header__mobile-nav" [class.header__mobile-nav--open]="isMobileMenuOpen">
+    <nav class="header__mobile-menu" aria-label="Mobile navigation">
+      <ul class="header__mobile-list">
+        <li class="header__mobile-item">
+          <a class="header__mobile-link" routerLink="/" (click)="closeMobileMenu()" routerLinkActive="header__mobile-link--active" [routerLinkActiveOptions]="{exact: true}">
+            Home
+          </a>
+        </li>
+        <li class="header__mobile-item">
+          <a class="header__mobile-link" routerLink="/shop" (click)="closeMobileMenu()" routerLinkActive="header__mobile-link--active">
+            Shop
+          </a>
+        </li>
+        <li class="header__mobile-item">
+          <a class="header__mobile-link" routerLink="/cabin-finder" (click)="closeMobileMenu()" routerLinkActive="header__mobile-link--active">
+            Cabin Finder
+          </a>
+        </li>
+        <li class="header__mobile-item">
+          <a class="header__mobile-link" routerLink="/about" (click)="closeMobileMenu()" routerLinkActive="header__mobile-link--active">
+            About
+          </a>
+        </li>
+        <li class="header__mobile-item">
+          <a class="header__mobile-link" routerLink="/services" (click)="closeMobileMenu()" routerLinkActive="header__mobile-link--active">
+            Services
+          </a>
+        </li>
+        <li class="header__mobile-item">
+          <a class="header__mobile-link" routerLink="/contact" (click)="closeMobileMenu()" routerLinkActive="header__mobile-link--active">
+            Contact
+          </a>
+        </li>
+      </ul>
+      <div class="header__mobile-actions">
+        <a class="button button--primary button--large header__mobile-cta" routerLink="/shop" (click)="closeMobileMenu()">
+          Get Started
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>

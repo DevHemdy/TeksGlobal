@@ -1,0 +1,167 @@
+<div class="customer-info">
+  <div class="customer-info__container">
+    <!-- Breadcrumb -->
+    <nav class="customer-info__breadcrumb" aria-label="Checkout progress">
+      <ol class="breadcrumb">
+        <li class="breadcrumb__item breadcrumb__item--active">
+          <span class="breadcrumb__number">1</span>
+          <span class="breadcrumb__text">Customer Info</span>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__number">2</span>
+          <span class="breadcrumb__text">Delivery</span>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__number">3</span>
+          <span class="breadcrumb__text">Payment</span>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__number">4</span>
+          <span class="breadcrumb__text">Review</span>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="customer-info__content">
+      <!-- Header -->
+      <div class="customer-info__header">
+        <h1 class="customer-info__title">Customer Information</h1>
+        <p class="customer-info__subtitle">Please provide your contact details for order confirmation and delivery updates.</p>
+      </div>
+
+      <!-- Form -->
+      <form class="customer-info__form" (ngSubmit)="onSubmit()" #customerForm="ngForm">
+        <div class="form-grid">
+          <!-- First Name -->
+          <div class="form-group">
+            <label for="firstName" class="form-label">
+              First Name <span class="form-label__required">*</span>
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              class="form-input"
+              [class.form-input--error]="hasError('firstName')"
+              [(ngModel)]="customerInfo.firstName"
+              required
+              placeholder="Enter your first name"
+            />
+            <span class="form-error" *ngIf="hasError('firstName')">
+              {{ getError('firstName') }}
+            </span>
+          </div>
+
+          <!-- Last Name -->
+          <div class="form-group">
+            <label for="lastName" class="form-label">
+              Last Name <span class="form-label__required">*</span>
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="form-input"
+              [class.form-input--error]="hasError('lastName')"
+              [(ngModel)]="customerInfo.lastName"
+              required
+              placeholder="Enter your last name"
+            />
+            <span class="form-error" *ngIf="hasError('lastName')">
+              {{ getError('lastName') }}
+            </span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group form-group--full">
+            <label for="email" class="form-label">
+              Email Address <span class="form-label__required">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              [class.form-input--error]="hasError('email')"
+              [(ngModel)]="customerInfo.email"
+              required
+              placeholder="your.email@example.com"
+            />
+            <span class="form-error" *ngIf="hasError('email')">
+              {{ getError('email') }}
+            </span>
+            <span class="form-hint" *ngIf="!hasError('email')">
+              We'll send your order confirmation and updates to this email
+            </span>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group form-group--full">
+            <label for="phone" class="form-label">
+              Phone Number <span class="form-label__required">*</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="form-input"
+              [class.form-input--error]="hasError('phone')"
+              [(ngModel)]="customerInfo.phone"
+              required
+              placeholder="+1 (555) 123-4567"
+            />
+            <span class="form-error" *ngIf="hasError('phone')">
+              {{ getError('phone') }}
+            </span>
+            <span class="form-hint" *ngIf="!hasError('phone')">
+              For delivery coordination and important updates
+            </span>
+          </div>
+
+          <!-- Company (Optional) -->
+          <div class="form-group form-group--full">
+            <label for="company" class="form-label">
+              Company Name <span class="form-label__optional">(Optional)</span>
+            </label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              class="form-input"
+              [(ngModel)]="customerInfo.company"
+              placeholder="Your company name"
+            />
+            <span class="form-hint">
+              If ordering for a business or organization
+            </span>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="customer-info__actions">
+          <a routerLink="/cart" class="button button--secondary button--large">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Cart
+          </a>
+          <button type="submit" class="button button--primary button--large">
+            Continue to Delivery
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Security Notice -->
+      <div class="customer-info__security">
+        <svg class="security-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2L3 5V9C3 13.55 6.84 17.74 10 18C13.16 17.74 17 13.55 17 9V5L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7.5 10L9.16667 11.6667L12.5 8.33333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="security-text">Your information is secure and will only be used for order processing</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,201 @@
+<div class="confirmation">
+  <div class="confirmation__container">
+    <!-- Success Header -->
+    <div class="confirmation__success">
+      <div class="success-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="38" stroke="#16a34a" stroke-width="4"/>
+          <path d="M25 40L35 50L55 30" stroke="#16a34a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1 class="success-title">Order Confirmed!</h1>
+      <p class="success-message">Thank you for your purchase. Your order has been successfully placed.</p>
+      <div class="order-number">
+        <span class="order-number__label">Order Number:</span>
+        <span class="order-number__value">{{ orderData?.orderId }}</span>
+      </div>
+    </div>
+
+    <!-- Order Details -->
+    <div class="confirmation__content">
+      <div class="confirmation__layout">
+        <!-- Main Content -->
+        <div class="confirmation__main">
+          <!-- Order Items -->
+          <section class="confirmation-section">
+            <h2 class="section-title">Your Items</h2>
+            <div class="order-items">
+              <div *ngFor="let item of orderData?.items" class="order-item">
+                <img [src]="item.image" [alt]="item.name" class="order-item__image" />
+                <div class="order-item__details">
+                  <h3 class="order-item__name">{{ item.name }}</h3>
+                  <p class="order-item__category">{{ item.category }}</p>
+                  <p class="order-item__quantity">Qty: {{ item.quantity }}</p>
+                </div>
+                <div class="order-item__price">
+                  ${{ (item.price * item.quantity).toLocaleString() }}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Delivery Information -->
+          <section class="confirmation-section">
+            <h2 class="section-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 3h15v13H1V3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 8h4l3 3v5h-7V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="5.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
+                <circle cx="18.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Delivery Details
+            </h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <h3 class="info-item__label">Delivery Method</h3>
+                <p class="info-item__value">{{ getDeliveryOptionName() }}</p>
+              </div>
+              <div class="info-item">
+                <h3 class="info-item__label">Estimated Delivery</h3>
+                <p class="info-item__value">{{ estimatedDeliveryDate }}</p>
+              </div>
+              <div class="info-item info-item--full">
+                <h3 class="info-item__label">Delivery Address</h3>
+                <p class="info-item__value">
+                  {{ orderData?.delivery?.address?.street }}<br>
+                  {{ orderData?.delivery?.address?.city }}, 
+                  {{ orderData?.delivery?.address?.state }} 
+                  {{ orderData?.delivery?.address?.zipCode }}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Contact Information -->
+          <section class="confirmation-section">
+            <h2 class="section-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Contact Information
+            </h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <h3 class="info-item__label">Customer Name</h3>
+                <p class="info-item__value">
+                  {{ orderData?.customer?.firstName }} {{ orderData?.customer?.lastName }}
+                </p>
+              </div>
+              <div class="info-item">
+                <h3 class="info-item__label">Email</h3>
+                <p class="info-item__value">{{ orderData?.customer?.email }}</p>
+              </div>
+              <div class="info-item">
+                <h3 class="info-item__label">Phone</h3>
+                <p class="info-item__value">{{ orderData?.customer?.phone }}</p>
+              </div>
+              <div class="info-item" *ngIf="orderData?.customer?.company">
+                <h3 class="info-item__label">Company</h3>
+                <p class="info-item__value">{{ orderData?.customer?.company }}</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="confirmation__sidebar">
+          <!-- Order Summary -->
+          <div class="order-summary">
+            <h3 class="order-summary__title">Order Summary</h3>
+            
+            <div class="summary-row">
+              <span class="summary-label">Subtotal:</span>
+              <span class="summary-value">${{ orderData?.pricing?.subtotal?.toLocaleString() }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Delivery Fee:</span>
+              <span class="summary-value">${{ orderData?.pricing?.deliveryFee?.toLocaleString() }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Tax:</span>
+              <span class="summary-value">${{ orderData?.pricing?.tax?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+            </div>
+
+            <div class="summary-total">
+              <span class="total-label">Total Paid:</span>
+              <span class="total-value">${{ orderData?.pricing?.total?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+            </div>
+
+            <button (click)="printOrder()" class="button button--secondary button--large button--full">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7V3h10v4M5 13H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="5" y="11" width="10" height="6" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Print Order
+            </button>
+          </div>
+
+          <!-- Next Steps -->
+          <div class="next-steps">
+            <h3 class="next-steps__title">What's Next?</h3>
+            <ul class="next-steps__list">
+              <li class="next-step">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.5 6.5L7.5 15.5L3.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>You'll receive an email confirmation shortly</span>
+              </li>
+              <li class="next-step">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.5 6.5L7.5 15.5L3.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Our team will contact you to schedule delivery</span>
+              </li>
+              <li class="next-step">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.5 6.5L7.5 15.5L3.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Track your order status via email updates</span>
+              </li>
+              <li class="next-step">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.5 6.5L7.5 15.5L3.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Professional installation included with delivery</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Support -->
+          <div class="support-card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <h4 class="support-card__title">Need Help?</h4>
+              <p class="support-card__text">Contact our customer support team</p>
+              <a routerLink="/contact" class="support-link">Get Support →</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="confirmation__actions">
+        <a routerLink="/" class="button button--secondary button--large">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 10h14M10 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to Home
+        </a>
+        <a routerLink="/shop" class="button button--primary button--large">
+          Continue Shopping
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

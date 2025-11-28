@@ -1,0 +1,192 @@
+<div class="review">
+  <div class="review__container">
+    <!-- Breadcrumb -->
+    <nav class="review__breadcrumb" aria-label="Checkout progress">
+      <ol class="breadcrumb">
+        <li class="breadcrumb__item breadcrumb__item--completed">
+          <span class="breadcrumb__number">✓</span>
+          <span class="breadcrumb__text">Customer Info</span>
+        </li>
+        <li class="breadcrumb__item breadcrumb__item--completed">
+          <span class="breadcrumb__number">✓</span>
+          <span class="breadcrumb__text">Delivery</span>
+        </li>
+        <li class="breadcrumb__item breadcrumb__item--completed">
+          <span class="breadcrumb__number">✓</span>
+          <span class="breadcrumb__text">Payment</span>
+        </li>
+        <li class="breadcrumb__item breadcrumb__item--active">
+          <span class="breadcrumb__number">4</span>
+          <span class="breadcrumb__text">Review</span>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="review__content">
+      <!-- Header -->
+      <div class="review__header">
+        <h1 class="review__title">Review Your Order</h1>
+        <p class="review__subtitle">Please review your order details before placing your order.</p>
+      </div>
+
+      <div class="review__layout">
+        <!-- Main Content -->
+        <div class="review__main">
+          <!-- Order Items -->
+          <section class="review-section">
+            <h2 class="section-title">Order Items</h2>
+            <div class="order-items">
+              <div *ngFor="let item of cartItems" class="order-item">
+                <img [src]="item.image" [alt]="item.name" class="order-item__image" />
+                <div class="order-item__details">
+                  <h3 class="order-item__name">{{ item.name }}</h3>
+                  <p class="order-item__category">{{ item.category }}</p>
+                  <p class="order-item__quantity">Quantity: {{ item.quantity }}</p>
+                </div>
+                <div class="order-item__price">
+                  ${{ (item.price * item.quantity).toLocaleString() }}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Customer Information -->
+          <section class="review-section">
+            <div class="section-header">
+              <h2 class="section-title">Customer Information</h2>
+              <a routerLink="/checkout/customer-info" class="edit-link">Edit</a>
+            </div>
+            <div class="info-card">
+              <div class="info-row">
+                <span class="info-label">Name:</span>
+                <span class="info-value">{{ customerInfo?.firstName }} {{ customerInfo?.lastName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-value">{{ customerInfo?.email }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Phone:</span>
+                <span class="info-value">{{ customerInfo?.phone }}</span>
+              </div>
+              <div class="info-row" *ngIf="customerInfo?.company">
+                <span class="info-label">Company:</span>
+                <span class="info-value">{{ customerInfo?.company }}</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Delivery Information -->
+          <section class="review-section">
+            <div class="section-header">
+              <h2 class="section-title">Delivery Information</h2>
+              <a routerLink="/checkout/delivery-options" class="edit-link">Edit</a>
+            </div>
+            <div class="info-card">
+              <div class="info-row">
+                <span class="info-label">Method:</span>
+                <span class="info-value">{{ getDeliveryOptionName() }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Address:</span>
+                <span class="info-value">
+                  {{ deliveryInfo?.address?.street }}, 
+                  {{ deliveryInfo?.address?.city }}, 
+                  {{ deliveryInfo?.address?.state }} 
+                  {{ deliveryInfo?.address?.zipCode }}
+                </span>
+              </div>
+              <div class="info-row" *ngIf="deliveryInfo?.address?.specialInstructions">
+                <span class="info-label">Instructions:</span>
+                <span class="info-value">{{ deliveryInfo?.address?.specialInstructions }}</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Payment Information -->
+          <section class="review-section">
+            <div class="section-header">
+              <h2 class="section-title">Payment Information</h2>
+              <a routerLink="/checkout/payment" class="edit-link">Edit</a>
+            </div>
+            <div class="info-card">
+              <div class="info-row">
+                <span class="info-label">Card:</span>
+                <span class="info-value">•••• •••• •••• {{ paymentInfo?.lastFourDigits }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Cardholder:</span>
+                <span class="info-value">{{ paymentInfo?.cardName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Billing ZIP:</span>
+                <span class="info-value">{{ paymentInfo?.billingZip }}</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Order Summary Sidebar -->
+        <aside class="review__sidebar">
+          <div class="order-summary">
+            <h3 class="order-summary__title">Order Summary</h3>
+            
+            <div class="order-summary__section">
+              <div class="summary-row">
+                <span class="summary-label">Subtotal:</span>
+                <span class="summary-value">${{ getSubtotal().toLocaleString() }}</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">Delivery Fee:</span>
+                <span class="summary-value">${{ getDeliveryFee().toLocaleString() }}</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">Tax (8%):</span>
+                <span class="summary-value">${{ getTax().toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+              </div>
+            </div>
+
+            <div class="order-summary__total">
+              <span class="total-label">Total:</span>
+              <span class="total-value">${{ getTotal().toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+            </div>
+
+            <button 
+              (click)="placeOrder()" 
+              class="button button--primary button--large button--full"
+              [disabled]="isProcessing"
+            >
+              <span *ngIf="!isProcessing">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.5 6.5L7.5 15.5L3.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Place Order
+              </span>
+              <span *ngIf="isProcessing" class="processing-text">
+                <svg class="spinner" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="50.265" stroke-dashoffset="12.566" opacity="0.3"/>
+                </svg>
+                Processing...
+              </span>
+            </button>
+
+            <p class="order-summary__note">
+              By placing this order, you agree to our Terms & Conditions and Privacy Policy
+            </p>
+          </div>
+
+          <!-- Security Badge -->
+          <div class="security-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <div>
+              <h4 class="security-badge__title">Secure Checkout</h4>
+              <p class="security-badge__text">Your information is protected</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>

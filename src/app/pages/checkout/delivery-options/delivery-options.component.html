@@ -1,0 +1,242 @@
+<div class="delivery-options">
+  <div class="delivery-options__container">
+    <!-- Breadcrumb -->
+    <nav class="delivery-options__breadcrumb" aria-label="Checkout progress">
+      <ol class="breadcrumb">
+        <li class="breadcrumb__item breadcrumb__item--completed">
+          <span class="breadcrumb__number">✓</span>
+          <span class="breadcrumb__text">Customer Info</span>
+        </li>
+        <li class="breadcrumb__item breadcrumb__item--active">
+          <span class="breadcrumb__number">2</span>
+          <span class="breadcrumb__text">Delivery</span>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__number">3</span>
+          <span class="breadcrumb__text">Payment</span>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__number">4</span>
+          <span class="breadcrumb__text">Review</span>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="delivery-options__content">
+      <!-- Header -->
+      <div class="delivery-options__header">
+        <h1 class="delivery-options__title">Delivery Options</h1>
+        <p class="delivery-options__subtitle">Choose your preferred delivery method and provide the installation address.</p>
+      </div>
+
+      <form class="delivery-options__form" (ngSubmit)="onSubmit()">
+        <!-- Delivery Method Selection -->
+        <section class="delivery-section">
+          <h2 class="section-title">Select Delivery Method</h2>
+          
+          <div class="delivery-cards">
+            <div 
+              *ngFor="let option of deliveryOptions"
+              class="delivery-card"
+              [class.delivery-card--selected]="selectedDeliveryOption === option.id"
+              (click)="selectDeliveryOption(option.id)"
+            >
+              <div class="delivery-card__header">
+                <input 
+                  type="radio" 
+                  [id]="option.id"
+                  name="deliveryOption"
+                  [value]="option.id"
+                  [(ngModel)]="selectedDeliveryOption"
+                  class="delivery-card__radio"
+                />
+                <div class="delivery-card__info">
+                  <div class="delivery-card__name">{{ option.name }}</div>
+                  <div class="delivery-card__price">${{ option.price }}</div>
+                </div>
+              </div>
+              <div class="delivery-card__body">
+                <p class="delivery-card__description">{{ option.description }}</p>
+                <div class="delivery-card__estimate">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 4v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>{{ option.estimatedDays }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Delivery Address -->
+        <section class="delivery-section">
+          <h2 class="section-title">Delivery Address</h2>
+
+          <div class="form-grid">
+            <!-- Street Address -->
+            <div class="form-group form-group--full">
+              <label for="street" class="form-label">
+                Street Address <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                class="form-input"
+                [class.form-input--error]="hasError('street')"
+                [(ngModel)]="deliveryAddress.street"
+                required
+                placeholder="123 Main Street, Apt 4B"
+              />
+              <span class="form-error" *ngIf="hasError('street')">
+                {{ getError('street') }}
+              </span>
+            </div>
+
+            <!-- City -->
+            <div class="form-group">
+              <label for="city" class="form-label">
+                City <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                class="form-input"
+                [class.form-input--error]="hasError('city')"
+                [(ngModel)]="deliveryAddress.city"
+                required
+                placeholder="Los Angeles"
+              />
+              <span class="form-error" *ngIf="hasError('city')">
+                {{ getError('city') }}
+              </span>
+            </div>
+
+            <!-- State -->
+            <div class="form-group">
+              <label for="state" class="form-label">
+                State <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="state"
+                name="state"
+                class="form-input"
+                [class.form-input--error]="hasError('state')"
+                [(ngModel)]="deliveryAddress.state"
+                required
+                placeholder="CA"
+              />
+              <span class="form-error" *ngIf="hasError('state')">
+                {{ getError('state') }}
+              </span>
+            </div>
+
+            <!-- ZIP Code -->
+            <div class="form-group">
+              <label for="zipCode" class="form-label">
+                ZIP Code <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="zipCode"
+                name="zipCode"
+                class="form-input"
+                [class.form-input--error]="hasError('zipCode')"
+                [(ngModel)]="deliveryAddress.zipCode"
+                required
+                placeholder="90210"
+              />
+              <span class="form-error" *ngIf="hasError('zipCode')">
+                {{ getError('zipCode') }}
+              </span>
+            </div>
+
+            <!-- Country -->
+            <div class="form-group">
+              <label for="country" class="form-label">
+                Country <span class="form-label__required">*</span>
+              </label>
+              <select
+                id="country"
+                name="country"
+                class="form-input"
+                [(ngModel)]="deliveryAddress.country"
+                required
+              >
+                <option value="United States">United States</option>
+                <option value="Canada">Canada</option>
+                <option value="Mexico">Mexico</option>
+              </select>
+            </div>
+
+            <!-- Special Instructions -->
+            <div class="form-group form-group--full">
+              <label for="specialInstructions" class="form-label">
+                Special Instructions <span class="form-label__optional">(Optional)</span>
+              </label>
+              <textarea
+                id="specialInstructions"
+                name="specialInstructions"
+                class="form-textarea"
+                [(ngModel)]="deliveryAddress.specialInstructions"
+                rows="4"
+                placeholder="Any special delivery instructions, gate codes, or site preparation notes..."
+              ></textarea>
+              <span class="form-hint">
+                Include details about access, terrain, or specific placement requirements
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Order Summary -->
+        <div class="delivery-summary">
+          <h3 class="delivery-summary__title">Delivery Summary</h3>
+          <div class="delivery-summary__row">
+            <span class="delivery-summary__label">Selected Option:</span>
+            <span class="delivery-summary__value">{{ getSelectedOption()?.name }}</span>
+          </div>
+          <div class="delivery-summary__row">
+            <span class="delivery-summary__label">Estimated Delivery:</span>
+            <span class="delivery-summary__value">{{ getSelectedOption()?.estimatedDays }}</span>
+          </div>
+          <div class="delivery-summary__row delivery-summary__row--total">
+            <span class="delivery-summary__label">Delivery Fee:</span>
+            <span class="delivery-summary__value">${{ getSelectedOption()?.price }}</span>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="delivery-options__actions">
+          <a routerLink="/checkout/customer-info" class="button button--secondary button--large">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back
+          </a>
+          <button type="submit" class="button button--primary button--large">
+            Continue to Payment
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Info Notice -->
+      <div class="delivery-options__notice">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 14v-4M10 6h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="notice-text">
+          All deliveries include professional installation and a complimentary one-year warranty.
+          Our team will contact you to schedule a convenient delivery date.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

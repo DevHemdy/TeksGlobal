@@ -1,0 +1,258 @@
+.customer-info {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  padding: 3rem 0;
+
+  &__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  &__breadcrumb {
+    margin-bottom: 2rem;
+  }
+
+  &__content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+  }
+
+  &__header {
+    margin-bottom: 2.5rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  &__form {
+    margin-bottom: 2rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+
+    .button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  &__security {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+
+    .security-icon {
+      flex-shrink: 0;
+      color: #16a34a;
+    }
+
+    .security-text {
+      font-size: 0.875rem;
+      color: #166534;
+      margin: 0;
+    }
+  }
+}
+
+// Breadcrumb styles
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #9ca3af;
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: '';
+      width: 40px;
+      height: 2px;
+      background: #e5e7eb;
+      margin-left: 1rem;
+    }
+
+    &--active {
+      color: #2563eb;
+
+      .breadcrumb__number {
+        background: #2563eb;
+        color: white;
+      }
+    }
+  }
+
+  &__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #6b7280;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  &__text {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+}
+
+// Form styles
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &--full {
+    grid-column: 1 / -1;
+  }
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+
+  &__required {
+    color: #dc2626;
+  }
+
+  &__optional {
+    color: #9ca3af;
+    font-weight: 400;
+  }
+}
+
+.form-input {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  &--error {
+    border-color: #dc2626;
+
+    &:focus {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+  }
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+}
+
+.form-error {
+  font-size: 0.875rem;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &::before {
+    content: '⚠';
+  }
+}
+
+.form-hint {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .customer-info {
+    padding: 2rem 0;
+
+    &__content {
+      padding: 1.5rem;
+    }
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__actions {
+      flex-direction: column-reverse;
+
+      .button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .breadcrumb {
+    &__text {
+      display: none;
+    }
+
+    &__item:not(:last-child)::after {
+      width: 20px;
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .customer-info {
+    &__container {
+      padding: 0 1rem;
+    }
+
+    &__content {
+      padding: 1.25rem;
+    }
+  }
+}

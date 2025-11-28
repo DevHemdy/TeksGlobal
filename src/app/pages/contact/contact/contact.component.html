@@ -1,0 +1,270 @@
+<!-- Contact Page -->
+<main class="contact-page">
+
+  <!-- Hero Section -->
+  <section class="page-hero" aria-labelledby="contact-hero-title">
+    <div class="page-hero__container">
+      <div class="page-hero__content">
+        <h1 id="contact-hero-title" class="page-hero__title">
+          Get in Touch
+          <span class="page-hero__title-accent">We're Here to Help</span>
+        </h1>
+        <p class="page-hero__description">
+          Have questions about our cabins? Ready to start your project? Our team is standing by to assist you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Content -->
+  <section class="contact-content">
+    <div class="contact-content__container">
+      <div class="contact-content__grid">
+        
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper">
+          <div class="contact-form-header">
+            <h2 class="contact-form-header__title">Send Us a Message</h2>
+            <p class="contact-form-header__description">
+              Fill out the form below and we'll get back to you within 24 hours.
+            </p>
+          </div>
+
+          <form class="contact-form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="firstName">
+                  First Name <span class="form-label__required">*</span>
+                </label>
+                <input 
+                  class="form-input" 
+                  type="text" 
+                  id="firstName" 
+                  name="firstName"
+                  [(ngModel)]="formData.firstName"
+                  required
+                  placeholder="John"
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="lastName">
+                  Last Name <span class="form-label__required">*</span>
+                </label>
+                <input 
+                  class="form-input" 
+                  type="text" 
+                  id="lastName" 
+                  name="lastName"
+                  [(ngModel)]="formData.lastName"
+                  required
+                  placeholder="Doe"
+                  aria-required="true"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">
+                Email Address <span class="form-label__required">*</span>
+              </label>
+              <input 
+                class="form-input" 
+                type="email" 
+                id="email" 
+                name="email"
+                [(ngModel)]="formData.email"
+                required
+                placeholder="john.doe@example.com"
+                aria-required="true"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="phone">
+                Phone Number
+              </label>
+              <input 
+                class="form-input" 
+                type="tel" 
+                id="phone" 
+                name="phone"
+                [(ngModel)]="formData.phone"
+                placeholder="+1 (234) 567-8900"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="subject">
+                Subject <span class="form-label__required">*</span>
+              </label>
+              <select 
+                class="form-select" 
+                id="subject" 
+                name="subject"
+                [(ngModel)]="formData.subject"
+                required
+                aria-required="true"
+              >
+                <option value="">Select a subject</option>
+                <option value="general">General Inquiry</option>
+                <option value="quote">Request a Quote</option>
+                <option value="support">Customer Support</option>
+                <option value="partnership">Partnership Opportunity</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="message">
+                Message <span class="form-label__required">*</span>
+              </label>
+              <textarea 
+                class="form-textarea" 
+                id="message" 
+                name="message"
+                [(ngModel)]="formData.message"
+                required
+                rows="6"
+                placeholder="Tell us about your project or question..."
+                aria-required="true"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-checkbox">
+                <input 
+                  type="checkbox" 
+                  name="newsletter"
+                  [(ngModel)]="formData.newsletter"
+                  class="form-checkbox__input"
+                />
+                <span class="form-checkbox__label">
+                  I'd like to receive updates and promotional emails from CabinHub
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" class="button button--primary button--large button--full" [disabled]="!contactForm.form.valid">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Info Sidebar -->
+        <aside class="contact-info">
+          <div class="contact-info__card">
+            <h3 class="contact-info__title">Contact Information</h3>
+            <p class="contact-info__description">
+              Reach out through any of these channels. We're available Monday - Friday, 9 AM - 6 PM.
+            </p>
+
+            <div class="contact-info__list">
+              <div class="contact-info__item">
+                <div class="contact-info__icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                  </svg>
+                </div>
+                <div class="contact-info__content">
+                  <h4 class="contact-info__label">Phone</h4>
+                  <a class="contact-info__link" href="tel:+1234567890">+1 (234) 567-890</a>
+                </div>
+              </div>
+
+              <div class="contact-info__item">
+                <div class="contact-info__icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <div class="contact-info__content">
+                  <h4 class="contact-info__label">Email</h4>
+                  <a class="contact-info__link" href="mailto:info@cabinhub.com">info&#64;cabinhub.com</a>
+                </div>
+              </div>
+
+              <div class="contact-info__item">
+                <div class="contact-info__icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                </div>
+                <div class="contact-info__content">
+                  <h4 class="contact-info__label">Address</h4>
+                  <address class="contact-info__text">
+                    123 Cabin Street<br>
+                    Lagos, Nigeria<br>
+                    100001
+                  </address>
+                </div>
+              </div>
+
+              <div class="contact-info__item">
+                <div class="contact-info__icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div class="contact-info__content">
+                  <h4 class="contact-info__label">Business Hours</h4>
+                  <p class="contact-info__text">
+                    Monday - Friday: 9:00 AM - 6:00 PM<br>
+                    Saturday: 10:00 AM - 4:00 PM<br>
+                    Sunday: Closed
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Quick Links -->
+          <div class="contact-info__card contact-info__card--secondary">
+            <h3 class="contact-info__title">Quick Links</h3>
+            <ul class="quick-links">
+              <li class="quick-links__item">
+                <a class="quick-links__link" href="#" aria-label="View frequently asked questions">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                  FAQ
+                </a>
+              </li>
+              <li class="quick-links__item">
+                <a class="quick-links__link" href="#" aria-label="View shipping information">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                  Shipping Info
+                </a>
+              </li>
+              <li class="quick-links__item">
+                <a class="quick-links__link" href="#" aria-label="View returns policy">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                  Returns Policy
+                </a>
+              </li>
+              <li class="quick-links__item">
+                <a class="quick-links__link" routerLink="/about" aria-label="Learn more about CabinHub">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                  About Us
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
