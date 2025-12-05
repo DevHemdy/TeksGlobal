@@ -13,7 +13,9 @@
 // ============================================================================
 
 .page-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0a1f3c 0%, #180728d7 100%), url(/assets/banner/contact-us.jpg);
+  background-size: cover;
+  background-position: left;
   padding: 6rem 1rem 4rem;
   position: relative;
   overflow: hidden;
@@ -185,7 +187,7 @@
 .form-input,
 .form-select,
 .form-textarea {
-  width: 100%;
+//   width: 100%;
   padding: 0.75rem 1rem;
   font-size: 1rem;
   font-family: inherit;

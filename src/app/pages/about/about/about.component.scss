@@ -12,8 +12,7 @@
 // PAGE HERO
 // ============================================================================
 
-.page-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.page-hero {    background: linear-gradient(135deg, #040b29 0%, #31465a 100%);
   padding: 6rem 1rem 4rem;
   position: relative;
   overflow: hidden;
@@ -387,6 +386,7 @@
 
 .team-member {
   background: #ffffff;
+  padding-top: 2rem;
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
@@ -401,9 +401,33 @@
 
 .team-member__media {
   position: relative;
-  padding-top: 100%;
-  background: #ecf0f1;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #e1e8ed;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  @media (min-width: 768px) {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.team-member__avatar {
+  width: 60%;
+  height: 60%;
+  color: #7f8c8d;
+  transition: transform 300ms ease, color 300ms ease;
+  
+  .team-member:hover & {
+    transform: scale(1.1);
+    color: #2c3e50;
+  }
 }
 
 .team-member__image {
@@ -416,7 +440,7 @@
   transition: transform 300ms ease;
   
   .team-member:hover & {
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 }
 

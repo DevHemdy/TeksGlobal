@@ -3,16 +3,55 @@
 
   <!-- Hero Section -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero__container">
-      <div class="hero__background" role="img" aria-label="Modern cabin in natural setting">
-        <img 
-          class="hero__image" 
-          src="/images/background/bg-1.jpg" 
-          alt="Premium modular cabin surrounded by nature"
-          loading="eager"
-        />
-      </div>
+    <!-- Image Slider (Full Hero Background) -->
+    <div class="hero__slider">
+      <img 
+        *ngFor="let image of heroImages; let i = index"
+        [class.hero__image]="true"
+        [class.hero__image--active]="i === currentImageIndex"
+        [src]="image" 
+        [alt]="'Premium modular cabin ' + (i + 1)"
+        loading="eager"
+      />
+    </div>
 
+    <!-- Gradient Overlay -->
+    <div class="hero__overlay"></div>
+
+    <!-- Slider Controls -->
+    <div class="hero__controls">
+      <button 
+        class="hero__control hero__control--prev" 
+        (click)="prevSlide()"
+        aria-label="Previous image"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button 
+        class="hero__control hero__control--next" 
+        (click)="nextSlide()"
+        aria-label="Next image"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Slider Indicators -->
+    <div class="hero__indicators">
+      <button 
+        *ngFor="let image of heroImages; let i = index"
+        [class.hero__indicator]="true"
+        [class.hero__indicator--active]="i === currentImageIndex"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'Go to image ' + (i + 1)"
+      ></button>
+    </div>
+
+    <div class="hero__container">
       <div class="hero__content">
         <h1 id="hero-title" class="hero__title">
           Premium Modular Cabins
@@ -34,9 +73,9 @@
           <a 
             class="button button--secondary button--large" 
             routerLink="/about"
-            aria-label="Learn more about CabinHub"
+            aria-label="Learn more about Teks Global Resources"
           >
-            Why CabinHub
+            Why Teks Global Resources
           </a>
         </div>
 
@@ -62,7 +101,7 @@
   <section class="benefits" aria-labelledby="benefits-title">
     <div class="benefits__container">
       <header class="benefits__header">
-        <h2 id="benefits-title" class="benefits__title">Why choose CabinHub?</h2>
+        <h2 id="benefits-title" class="benefits__title">Why choose Teks Global Resources?</h2>
         <p class="benefits__description">
           We combine quality, speed and customization so you can get moving faster — without compromise.
         </p>
@@ -71,12 +110,10 @@
       <div class="benefits__grid">
         <article class="benefit-card">
           <div class="benefit-card__icon" aria-hidden="true">
-            <img 
-              src="/images/icon-affordable.svg" 
-              alt="" 
-              width="64" 
-              height="64"
-            />
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" stroke="none" fill="currentColor">₦</text>
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
           </div>
           <h3 class="benefit-card__title">Affordable</h3>
           <p class="benefit-card__description">
@@ -86,12 +123,9 @@
 
         <article class="benefit-card">
           <div class="benefit-card__icon" aria-hidden="true">
-            <img 
-              src="/images/icon-custom.svg" 
-              alt="" 
-              width="64" 
-              height="64"
-            />
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+            </svg>
           </div>
           <h3 class="benefit-card__title">Customizable</h3>
           <p class="benefit-card__description">
@@ -101,14 +135,11 @@
 
         <article class="benefit-card">
           <div class="benefit-card__icon" aria-hidden="true">
-            <img 
-              src="/images/icon-speed.svg" 
-              alt="" 
-              width="64" 
-              height="64"
-            />
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
           </div>
-          <h3 class="benefit-card__title">Fast delivery</h3>
+          <h3 class="benefit-card__title">Fast Delivery</h3>
           <p class="benefit-card__description">
             Streamlined production and installation to minimize downtime.
           </p>
@@ -128,74 +159,24 @@
       </header>
 
       <div class="featured-products__grid">
-        <article class="product-card">
+        <article class="product-card" *ngFor="let product of products.slice(0, 3)">
           <div class="product-card__media">
             <img 
-              class="product-card__image" 
-              src="/images/cabin1.svg" 
-              alt="Wooden Office Cabin - exterior view"
+              class="product-card__image"
+              [src]="product.image" 
+              [alt]="product.name"
               loading="lazy"
             />
           </div>
           <div class="product-card__content">
-            <h3 class="product-card__title">Wooden Office Cabin</h3>
-            <p class="product-card__description">Perfect for a private workspace</p>
+            <h3 class="product-card__title">{{ product.name }}</h3>
+            <p class="product-card__description">{{ product.description }}</p>
             <div class="product-card__footer">
-              <span class="product-card__price" aria-label="Price per day">₦5,000 / day</span>
+              <span class="product-card__price" aria-label="Price">₦{{ product.price.toLocaleString() }}</span>
               <a 
                 class="button button--small button--primary" 
-                routerLink="/shop"
-                aria-label="Book Wooden Office Cabin"
-              >
-                Book Now
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div class="product-card__media">
-            <img 
-              class="product-card__image" 
-              src="/images/cabin2.svg" 
-              alt="Luxury Cabin Room - exterior view"
-              loading="lazy"
-            />
-          </div>
-          <div class="product-card__content">
-            <h3 class="product-card__title">Luxury Cabin Room</h3>
-            <p class="product-card__description">Stylish, spacious, and modern</p>
-            <div class="product-card__footer">
-              <span class="product-card__price" aria-label="Price per day">₦12,000 / day</span>
-              <a 
-                class="button button--small button--primary" 
-                routerLink="/shop"
-                aria-label="Book Luxury Cabin Room"
-              >
-                Book Now
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div class="product-card__media">
-            <img 
-              class="product-card__image" 
-              src="/images/cabin3.svg" 
-              alt="Eco Cabin - exterior view"
-              loading="lazy"
-            />
-          </div>
-          <div class="product-card__content">
-            <h3 class="product-card__title">Eco Cabin</h3>
-            <p class="product-card__description">Sustainable & eco-friendly living</p>
-            <div class="product-card__footer">
-              <span class="product-card__price" aria-label="Price per day">₦8,000 / day</span>
-              <a 
-                class="button button--small button--primary" 
-                routerLink="/shop"
-                aria-label="Book Eco Cabin"
+                [routerLink]="['/product', product.id]"
+                [attr.aria-label]="'View details for ' + product.name"
               >
                 Book Now
               </a>

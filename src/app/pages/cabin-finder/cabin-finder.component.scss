@@ -7,7 +7,7 @@
 
 // Hero Section
 .finder-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #040b29 0%, #31465a 100%);
   padding: 3rem 0;
   color: #fff;
 
@@ -361,7 +361,7 @@
     .product-item {
       display: grid;
       grid-template-columns: 200px 1fr;
-      
+
       @media (max-width: 640px) {
         grid-template-columns: 1fr;
       }
@@ -606,7 +606,8 @@
   white-space: nowrap;
 
   &--primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+
     color: #fff;
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 

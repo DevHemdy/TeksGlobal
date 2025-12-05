@@ -36,12 +36,12 @@ export class ProductService {
       name: 'Modern Office Pod',
       category: 'Office',
       price: 1500000,
-      image: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800',
+      image: 'assets/img/XCaliber_Container_Custom_Shipping_Container_Gallery_13.webp',
       images: [
-        'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800',
-        'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=800',
-        'https://images.unsplash.com/photo-1506003094589-53954a26283f?w=800',
-        'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800'
+        'assets/img/XCaliber_Container_Custom_Shipping_Container_Gallery_13.webp',
+        'assets/img/OIP.webp',
+        'assets/img/container-offices.jpg',
+        'assets/img/bg-1.jpg'
       ],
       description: 'Perfect workspace solution for your backyard',
       longDescription: 'Transform your backyard into a productive workspace with our Modern Office Pod. This compact yet spacious cabin features premium insulation, electric-ready infrastructure, and double-glazed windows for year-round comfort. The contemporary design seamlessly blends with any outdoor setting while providing a quiet, focused environment for remote work or creative projects.',
@@ -79,12 +79,12 @@ export class ProductService {
       name: 'Luxury Living Cabin',
       category: 'Living',
       price: 2800000,
-      image: 'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=800',
+      image: 'assets/img/2.jpg',
       images: [
-        'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=800',
-        'https://images.unsplash.com/photo-1506003094589-53954a26283f?w=800',
-        'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800',
-        'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800'
+        'assets/img/2.jpg',
+        'assets/img/bg-1.jpg',
+        'assets/img/container-offices.jpg',
+        'assets/img/OIP.webp'
       ],
       description: 'Spacious and stylish living space',
       longDescription: 'Experience luxury outdoor living with our premium cabin designed for comfort and style. Featuring a modern kitchen unit, full bathroom, and high-end finishes throughout, this cabin provides all the amenities of a traditional home in a compact, energy-efficient package. Perfect for guest accommodation, vacation rentals, or additional living space.',
@@ -122,12 +122,12 @@ export class ProductService {
       name: 'Eco Studio Retreat',
       category: 'Eco-Friendly',
       price: 2200000,
-      image: 'https://images.unsplash.com/photo-1506003094589-53954a26283f?w=800',
+      image: 'assets/img/container-offices.jpg',
       images: [
-        'https://images.unsplash.com/photo-1506003094589-53954a26283f?w=800',
-        'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800',
-        'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800',
-        'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=800'
+        'assets/img/container-offices.jpg',
+        'assets/img/bg-1.jpg',
+        'assets/img/2.jpg',
+        'assets/img/OIP.webp'
       ],
       description: 'Sustainable design with solar panels',
       longDescription: 'Embrace sustainable living with our Eco Studio Retreat, designed with the environment in mind. This cabin features solar panel integration, rainwater collection systems, and construction using recycled and sustainable materials. Reduce your carbon footprint while enjoying a comfortable, modern living space that harmonizes with nature.',
@@ -165,12 +165,12 @@ export class ProductService {
       name: 'Compact Office Cabin',
       category: 'Office',
       price: 1200000,
-      image: 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800',
+      image: 'assets/img/bg-1.jpg',
       images: [
-        'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800',
-        'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800',
-        'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=800',
-        'https://images.unsplash.com/photo-1506003094589-53954a26283f?w=800'
+        'assets/img/bg-1.jpg',
+        'assets/img/container-offices.jpg',
+        'assets/img/2.jpg',
+        'assets/img/OIP.webp'
       ],
       description: 'Efficient workspace for solo professionals',
       longDescription: 'Maximize your productivity in this thoughtfully designed compact office cabin. Perfect for solo professionals, this space-efficient design includes a built-in ergonomic desk, climate control, and WiFi-ready infrastructure. The compact footprint makes it ideal for smaller yards while still providing everything you need for a professional workspace.',
@@ -208,12 +208,12 @@ export class ProductService {
       name: 'Artist Studio',
       category: 'Studio',
       price: 2500000,
-      image: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800',
+      image: 'assets/img/3.webp',
       images: [
-        'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800',
-        'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=800',
-        'https://images.unsplash.com/photo-1506003094589-53954a26283f?w=800',
-        'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800'
+        'assets/img/3.webp',
+        'assets/img/2.jpg',
+        'assets/img/container-offices.jpg',
+        'assets/img/bg-1.jpg'
       ],
       description: 'Creative space with natural lighting',
       longDescription: 'Unleash your creativity in this purpose-built artist studio featuring abundant natural light through strategically placed skylights and large windows. High ceilings create an open, inspiring atmosphere, while built-in storage units keep your materials organized. Perfect for painters, sculptors, crafters, or any creative professional seeking a dedicated workspace.',
@@ -251,12 +251,12 @@ export class ProductService {
       name: 'Garden Room',
       category: 'Living',
       price: 1800000,
-      image: 'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=800',
+      image: 'assets/img/OIP.webp',
       images: [
-        'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=800',
-        'https://images.unsplash.com/photo-1506003094589-53954a26283f?w=800',
-        'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800',
-        'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800'
+        'assets/img/OIP.webp',
+        'assets/img/XCaliber_Container_Custom_Shipping_Container_Gallery_13.webp',
+        'assets/img/container-offices.jpg',
+        'assets/img/bg-1.jpg'
       ],
       description: 'Versatile space for relaxation and entertaining',
       longDescription: 'Create the perfect indoor-outdoor living experience with our Garden Room. Featuring elegant bi-fold doors that open to your garden, premium flooring, and an attached deck, this versatile space is ideal for entertaining guests, family gatherings, or simply relaxing in comfort. The contemporary design enhances any property while providing year-round usability.',

@@ -10,5 +10,5 @@ import { FooterComponent } from "./components/reusables/footer/footer/footer.com
   styleUrls: ['./app.component.scss']   
 })
 export class AppComponent {
-  title = 'cabinHub';
+  title = 'Teks Global Resources';
 }
