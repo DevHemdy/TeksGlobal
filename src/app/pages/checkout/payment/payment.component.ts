@@ -68,9 +68,9 @@ export class PaymentComponent implements OnInit {
     // Load delivery fee
     const delivery = JSON.parse(deliveryInfo);
     const deliveryOptions = [
-      { id: 'standard', price: 499 },
-      { id: 'express', price: 999 },
-      { id: 'premium', price: 1499 }
+      { id: 'standard', price: 150000 },
+      { id: 'express', price: 300000 },
+      { id: 'premium', price: 450000 }
     ];
     const selectedOption = deliveryOptions.find(opt => opt.id === delivery.option);
     this.deliveryFee = selectedOption?.price || 0;

@@ -33,7 +33,7 @@
                   <p class="order-item__quantity">Qty: {{ item.quantity }}</p>
                 </div>
                 <div class="order-item__price">
-                  ${{ (item.price * item.quantity).toLocaleString() }}
+                  ₦{{ (item.price * item.quantity).toLocaleString() }}
                 </div>
               </div>
             </div>
@@ -111,20 +111,20 @@
             
             <div class="summary-row">
               <span class="summary-label">Subtotal:</span>
-              <span class="summary-value">${{ orderData?.pricing?.subtotal?.toLocaleString() }}</span>
+              <span class="summary-value">₦{{ orderData?.pricing?.subtotal?.toLocaleString() }}</span>
             </div>
             <div class="summary-row">
               <span class="summary-label">Delivery Fee:</span>
-              <span class="summary-value">${{ orderData?.pricing?.deliveryFee?.toLocaleString() }}</span>
+              <span class="summary-value">₦{{ orderData?.pricing?.deliveryFee?.toLocaleString() }}</span>
             </div>
             <div class="summary-row">
               <span class="summary-label">Tax:</span>
-              <span class="summary-value">${{ orderData?.pricing?.tax?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+              <span class="summary-value">₦{{ orderData?.pricing?.tax?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
             </div>
 
             <div class="summary-total">
               <span class="total-label">Total Paid:</span>
-              <span class="total-value">${{ orderData?.pricing?.total?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+              <span class="total-value">₦{{ orderData?.pricing?.total?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
             </div>
 
             <button (click)="printOrder()" class="button button--secondary button--large button--full">

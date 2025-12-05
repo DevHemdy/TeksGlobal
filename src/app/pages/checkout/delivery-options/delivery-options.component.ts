@@ -21,6 +21,17 @@ interface DeliveryAddress {
   specialInstructions?: string;
 }
 
+interface Country {
+  name: string;
+  code: string;
+  states: State[];
+}
+
+interface State {
+  name: string;
+  cities: string[];
+}
+
 @Component({
   selector: 'app-delivery-options',
   standalone: true,
@@ -35,7 +46,7 @@ export class DeliveryOptionsComponent implements OnInit {
       name: 'Standard Delivery',
       description: 'Ground shipping with professional installation team',
       estimatedDays: '14-21 business days',
-      price: 499,
+      price: 150000,
       icon: 'truck'
     },
     {
@@ -43,7 +54,7 @@ export class DeliveryOptionsComponent implements OnInit {
       name: 'Express Delivery',
       description: 'Priority shipping with expedited installation',
       estimatedDays: '7-10 business days',
-      price: 999,
+      price: 300000,
       icon: 'fast-truck'
     },
     {
@@ -51,8 +62,36 @@ export class DeliveryOptionsComponent implements OnInit {
       name: 'Premium White Glove',
       description: 'Dedicated delivery team with full setup and site preparation',
       estimatedDays: '5-7 business days',
-      price: 1499,
+      price: 450000,
       icon: 'star'
+    }
+  ];
+
+  countries: Country[] = [
+    {
+      name: 'Nigeria',
+      code: 'NG',
+      states: [
+        { name: 'Lagos', cities: ['Ikeja', 'Victoria Island', 'Lekki', 'Surulere', 'Yaba', 'Apapa'] },
+        { name: 'Abuja (FCT)', cities: ['Garki', 'Wuse', 'Maitama', 'Asokoro', 'Gwagwalada'] },
+        { name: 'Rivers', cities: ['Port Harcourt', 'Obio-Akpor', 'Eleme', 'Ikwerre', 'Okrika'] },
+        { name: 'Kano', cities: ['Kano Municipal', 'Nassarawa', 'Fagge', 'Dala', 'Gwale'] },
+        { name: 'Oyo', cities: ['Ibadan', 'Ogbomosho', 'Oyo', 'Iseyin', 'Saki'] },
+        { name: 'Delta', cities: ['Warri', 'Asaba', 'Sapele', 'Ughelli', 'Agbor'] },
+        { name: 'Kaduna', cities: ['Kaduna', 'Zaria', 'Kafanchan', 'Kagoro', 'Kachia'] },
+        { name: 'Enugu', cities: ['Enugu', 'Nsukka', 'Agbani', 'Udi', 'Awgu'] },
+        { name: 'Anambra', cities: ['Awka', 'Onitsha', 'Nnewi', 'Ekwulobia', 'Agulu'] },
+        { name: 'Edo', cities: ['Benin City', 'Auchi', 'Ekpoma', 'Uromi', 'Ubiaja'] }
+      ]
+    },
+    {
+      name: 'United States',
+      code: 'US',
+      states: [
+        { name: 'California', cities: ['Los Angeles', 'San Francisco', 'San Diego', 'Sacramento'] },
+        { name: 'Texas', cities: ['Houston', 'Dallas', 'Austin', 'San Antonio'] },
+        { name: 'New York', cities: ['New York City', 'Buffalo', 'Rochester', 'Albany'] }
+      ]
     }
   ];
 
@@ -63,9 +102,12 @@ export class DeliveryOptionsComponent implements OnInit {
     city: '',
     state: '',
     zipCode: '',
-    country: 'United States',
+    country: 'Nigeria',
     specialInstructions: ''
   };
+
+  availableStates: State[] = [];
+  availableCities: string[] = [];
 
   formErrors: { [key: string]: string } = {};
   customerName: string = '';
@@ -82,6 +124,23 @@ export class DeliveryOptionsComponent implements OnInit {
       // Redirect back if customer info not found
       this.router.navigate(['/checkout/customer-info']);
     }
+
+    // Initialize states for default country (Nigeria)
+    this.onCountryChange();
+  }
+
+  onCountryChange(): void {
+    const selectedCountry = this.countries.find(c => c.name === this.deliveryAddress.country);
+    this.availableStates = selectedCountry?.states || [];
+    this.availableCities = [];
+    this.deliveryAddress.state = '';
+    this.deliveryAddress.city = '';
+  }
+
+  onStateChange(): void {
+    const selectedState = this.availableStates.find(s => s.name === this.deliveryAddress.state);
+    this.availableCities = selectedState?.cities || [];
+    this.deliveryAddress.city = '';
   }
 
   selectDeliveryOption(optionId: string): void {
@@ -114,13 +173,9 @@ export class DeliveryOptionsComponent implements OnInit {
       isValid = false;
     }
 
-    // Zip code validation
-    const zipRegex = /^\d{5}(-\d{4})?$/;
+    // Zip code validation (more flexible for international)
     if (!this.deliveryAddress.zipCode.trim()) {
-      this.formErrors['zipCode'] = 'ZIP code is required';
-      isValid = false;
-    } else if (!zipRegex.test(this.deliveryAddress.zipCode)) {
-      this.formErrors['zipCode'] = 'Please enter a valid ZIP code';
+      this.formErrors['zipCode'] = 'Postal code is required';
       isValid = false;
     }
 
@@ -136,10 +191,8 @@ export class DeliveryOptionsComponent implements OnInit {
       };
       localStorage.setItem('deliveryInfo', JSON.stringify(deliveryData));
       
-      // Navigate to payment step (to be created)
-      console.log('Delivery info saved:', deliveryData);
-      alert('Delivery options saved! Payment step coming soon.');
-      // this.router.navigate(['/checkout/payment']);
+      // Navigate to payment step
+      this.router.navigate(['/checkout/payment']);
     }
   }
 

@@ -52,7 +52,7 @@
                 />
                 <div class="delivery-card__info">
                   <div class="delivery-card__name">{{ option.name }}</div>
-                  <div class="delivery-card__price">${{ option.price }}</div>
+                  <div class="delivery-card__price">₦{{ option.price.toLocaleString() }}</div>
                 </div>
               </div>
               <div class="delivery-card__body">
@@ -94,67 +94,8 @@
               </span>
             </div>
 
-            <!-- City -->
-            <div class="form-group">
-              <label for="city" class="form-label">
-                City <span class="form-label__required">*</span>
-              </label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                class="form-input"
-                [class.form-input--error]="hasError('city')"
-                [(ngModel)]="deliveryAddress.city"
-                required
-                placeholder="Los Angeles"
-              />
-              <span class="form-error" *ngIf="hasError('city')">
-                {{ getError('city') }}
-              </span>
-            </div>
 
-            <!-- State -->
-            <div class="form-group">
-              <label for="state" class="form-label">
-                State <span class="form-label__required">*</span>
-              </label>
-              <input
-                type="text"
-                id="state"
-                name="state"
-                class="form-input"
-                [class.form-input--error]="hasError('state')"
-                [(ngModel)]="deliveryAddress.state"
-                required
-                placeholder="CA"
-              />
-              <span class="form-error" *ngIf="hasError('state')">
-                {{ getError('state') }}
-              </span>
-            </div>
-
-            <!-- ZIP Code -->
-            <div class="form-group">
-              <label for="zipCode" class="form-label">
-                ZIP Code <span class="form-label__required">*</span>
-              </label>
-              <input
-                type="text"
-                id="zipCode"
-                name="zipCode"
-                class="form-input"
-                [class.form-input--error]="hasError('zipCode')"
-                [(ngModel)]="deliveryAddress.zipCode"
-                required
-                placeholder="90210"
-              />
-              <span class="form-error" *ngIf="hasError('zipCode')">
-                {{ getError('zipCode') }}
-              </span>
-            </div>
-
-            <!-- Country -->
+                      <!-- Country -->
             <div class="form-group">
               <label for="country" class="form-label">
                 Country <span class="form-label__required">*</span>
@@ -164,14 +105,81 @@
                 name="country"
                 class="form-input"
                 [(ngModel)]="deliveryAddress.country"
+                (ngModelChange)="onCountryChange()"
                 required
               >
-                <option value="United States">United States</option>
-                <option value="Canada">Canada</option>
-                <option value="Mexico">Mexico</option>
+                <option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</option>
               </select>
             </div>
 
+
+
+
+            <!-- State -->
+            <div class="form-group">
+              <label for="state" class="form-label">
+                State <span class="form-label__required">*</span>
+              </label>
+              <select
+                id="state"
+                name="state"
+                class="form-input"
+                [class.form-input--error]="hasError('state')"
+                [(ngModel)]="deliveryAddress.state"
+                (ngModelChange)="onStateChange()"
+                required
+              >
+                <option value="">Select State</option>
+                <option *ngFor="let state of availableStates" [value]="state.name">{{ state.name }}</option>
+              </select>
+              <span class="form-error" *ngIf="hasError('state')">
+                {{ getError('state') }}
+              </span>
+            </div>
+
+                        <!-- City -->
+            <div class="form-group">
+              <label for="city" class="form-label">
+                City <span class="form-label__required">*</span>
+              </label>
+              <select
+                id="city"
+                name="city"
+                class="form-input"
+                [class.form-input--error]="hasError('city')"
+                [(ngModel)]="deliveryAddress.city"
+                required
+                [disabled]="!deliveryAddress.state"
+              >
+                <option value="">Select City</option>
+                <option *ngFor="let city of availableCities" [value]="city">{{ city }}</option>
+              </select>
+              <span class="form-error" *ngIf="hasError('city')">
+                {{ getError('city') }}
+              </span>
+            </div>
+
+            <!-- ZIP Code -->
+            <div class="form-group">
+              <label for="zipCode" class="form-label">
+                Postal Code <span class="form-label__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="zipCode"
+                name="zipCode"
+                class="form-input"
+                [class.form-input--error]="hasError('zipCode')"
+                [(ngModel)]="deliveryAddress.zipCode"
+                required
+                placeholder="Enter postal code"
+              />
+              <span class="form-error" *ngIf="hasError('zipCode')">
+                {{ getError('zipCode') }}
+              </span>
+            </div>
+
+  
             <!-- Special Instructions -->
             <div class="form-group form-group--full">
               <label for="specialInstructions" class="form-label">
@@ -205,7 +213,7 @@
           </div>
           <div class="delivery-summary__row delivery-summary__row--total">
             <span class="delivery-summary__label">Delivery Fee:</span>
-            <span class="delivery-summary__value">${{ getSelectedOption()?.price }}</span>
+            <span class="delivery-summary__value">₦{{ (getSelectedOption()?.price || 0).toLocaleString() }}</span>
           </div>
         </div>
 

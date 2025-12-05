@@ -44,7 +44,7 @@
                   <p class="order-item__quantity">Quantity: {{ item.quantity }}</p>
                 </div>
                 <div class="order-item__price">
-                  ${{ (item.price * item.quantity).toLocaleString() }}
+                  ₦{{ (item.price * item.quantity).toLocaleString() }}
                 </div>
               </div>
             </div>
@@ -134,21 +134,21 @@
             <div class="order-summary__section">
               <div class="summary-row">
                 <span class="summary-label">Subtotal:</span>
-                <span class="summary-value">${{ getSubtotal().toLocaleString() }}</span>
+                <span class="summary-value">₦{{ getSubtotal().toLocaleString() }}</span>
               </div>
               <div class="summary-row">
                 <span class="summary-label">Delivery Fee:</span>
-                <span class="summary-value">${{ getDeliveryFee().toLocaleString() }}</span>
+                <span class="summary-value">₦{{ getDeliveryFee().toLocaleString() }}</span>
               </div>
               <div class="summary-row">
                 <span class="summary-label">Tax (8%):</span>
-                <span class="summary-value">${{ getTax().toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+                <span class="summary-value">₦{{ getTax().toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
               </div>
             </div>
 
             <div class="order-summary__total">
               <span class="total-label">Total:</span>
-              <span class="total-value">${{ getTotal().toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+              <span class="total-value">₦{{ getTotal().toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
             </div>
 
             <button 

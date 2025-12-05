@@ -17,9 +17,9 @@ export class ReviewComponent implements OnInit {
   paymentInfo: any = null;
   
   deliveryOptions = [
-    { id: 'standard', name: 'Standard Delivery', price: 499 },
-    { id: 'express', name: 'Express Delivery', price: 999 },
-    { id: 'premium', name: 'Premium White Glove', price: 1499 }
+    { id: 'standard', name: 'Standard Delivery', price: 150000 },
+    { id: 'express', name: 'Express Delivery', price: 300000 },
+    { id: 'premium', name: 'Premium White Glove', price: 450000 }
   ];
 
   isProcessing: boolean = false;
