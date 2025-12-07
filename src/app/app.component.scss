@@ -8,9 +8,14 @@
   min-height: 100vh;
 }
 
-// Ensure router outlet content fills available space
+// Add padding for fixed header
 ::ng-deep router-outlet + * {
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding-top: 72px; // Match header height on mobile
+  
+  @media (min-width: 1024px) {
+    padding-top: 80px; // Match header height on desktop
+  }
 }

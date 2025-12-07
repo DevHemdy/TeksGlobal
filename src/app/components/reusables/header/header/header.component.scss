@@ -7,8 +7,11 @@
 }
 
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
@@ -67,6 +70,11 @@
 .header__logo-text {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   letter-spacing: -0.02em;
+  
+  // Hide on mobile screens
+  @media (max-width: 427px) {
+    display: none;
+  }
   
   @media (max-width: 639px) {
     font-size: 1.125rem;
